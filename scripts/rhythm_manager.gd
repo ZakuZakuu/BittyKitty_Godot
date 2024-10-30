@@ -105,5 +105,3 @@ func load_json(file_path: String):
 			printerr("Load score failed!")
 	else:
 		printerr("Score file not exist!")
-	
-	
