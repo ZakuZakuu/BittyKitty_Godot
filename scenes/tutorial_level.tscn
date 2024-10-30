@@ -1,0 +1,96 @@
+[gd_scene load_steps=11 format=3 uid="uid://bgvxk7c3ltjn5"]
+
+[ext_resource type="Script" path="res://scripts/rhythm_manager.gd" id="1_aamvn"]
+[ext_resource type="AudioStream" uid="uid://bpqaumv0oafk7" path="res://assets/musics/Metronome_meowmeow.mp3" id="2_34nfj"]
+[ext_resource type="Texture2D" uid="uid://5xln4wil6l1c" path="res://assets/sprites/hand.png" id="3_flblx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_464qi"]
+atlas = ExtResource("3_flblx")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbogn"]
+atlas = ExtResource("3_flblx")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bwvxo"]
+atlas = ExtResource("3_flblx")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixj0x"]
+atlas = ExtResource("3_flblx")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mvc1h"]
+atlas = ExtResource("3_flblx")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gur4j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_464qi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbogn")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_bwvxo")
+}],
+"loop": true,
+"name": &"dodge",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixj0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mvc1h")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_k5ec1"]
+script/source = "extends AnimatedSprite2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="TutorialLevel" type="Node2D"]
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 120.0
+offset_bottom = 160.0
+color = Color(0.105882, 0.117647, 0.14902, 1)
+
+[node name="RhythmManager" type="Node2D" parent="."]
+script = ExtResource("1_aamvn")
+
+[node name="DodgeTimer" type="Timer" parent="RhythmManager"]
+process_callback = 0
+wait_time = 0.5
+one_shot = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RhythmManager"]
+
+[node name="HandSprite" type="AnimatedSprite2D" parent="RhythmManager"]
+position = Vector2(62, 109)
+sprite_frames = SubResource("SpriteFrames_gur4j")
+animation = &"dodge"
+script = SubResource("GDScript_k5ec1")
+
+[node name="Song" type="AudioStreamPlayer" parent="RhythmManager"]
+stream = ExtResource("2_34nfj")
+autoplay = true
+
+[connection signal="timeout" from="RhythmManager/DodgeTimer" to="RhythmManager" method="_on_dodge_timer_timeout"]

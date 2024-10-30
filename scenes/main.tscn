@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bq3ljhye1siy6"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_up8sk"]
+[ext_resource type="PackedScene" uid="uid://bu1ajgdsffi7s" path="res://scenes/welcome_screen.tscn" id="2_4ja18"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_up8sk")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 75.0
+offset_bottom = 100.0
+scale = Vector2(4, 4)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(120, 160)
+render_target_update_mode = 4
+
+[node name="WelcomeScreen" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_4ja18")]
