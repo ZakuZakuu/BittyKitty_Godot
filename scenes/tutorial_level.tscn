@@ -1,70 +1,120 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgvxk7c3ltjn5"]
+[gd_scene load_steps=19 format=3 uid="uid://bgvxk7c3ltjn5"]
 
 [ext_resource type="Script" path="res://scripts/rhythm_manager.gd" id="1_aamvn"]
 [ext_resource type="AudioStream" uid="uid://bpqaumv0oafk7" path="res://assets/musics/Metronome_meowmeow.mp3" id="2_34nfj"]
-[ext_resource type="Texture2D" uid="uid://5xln4wil6l1c" path="res://assets/sprites/hand.png" id="3_flblx"]
+[ext_resource type="Texture2D" uid="uid://clc1rcrm152dj" path="res://assets/sprites/cat.png" id="2_obdlw"]
+[ext_resource type="Texture2D" uid="uid://dopexwxbut4ut" path="res://assets/sprites/hand.png" id="3_flblx"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_464qi"]
-atlas = ExtResource("3_flblx")
-region = Rect2(64, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqq84"]
+atlas = ExtResource("2_obdlw")
+region = Rect2(0, 24, 105, 90)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hbogn"]
-atlas = ExtResource("3_flblx")
-region = Rect2(96, 0, 32, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_ns1x8"]
+atlas = ExtResource("2_obdlw")
+region = Rect2(105, 24, 105, 90)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bwvxo"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rf0h5"]
+atlas = ExtResource("2_obdlw")
+region = Rect2(210, 24, 105, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wi0y"]
+atlas = ExtResource("2_obdlw")
+region = Rect2(315, 24, 105, 90)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_54bul"]
+animations = [{
+"frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_eqq84")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_ns1x8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rf0h5")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_0wi0y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rf0h5")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 16.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_troje"]
 atlas = ExtResource("3_flblx")
 region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ixj0x"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfruc"]
+atlas = ExtResource("3_flblx")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_meyhv"]
+atlas = ExtResource("3_flblx")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dy348"]
+atlas = ExtResource("3_flblx")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwal1"]
 atlas = ExtResource("3_flblx")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mvc1h"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r87m3"]
 atlas = ExtResource("3_flblx")
 region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n0xnt"]
+atlas = ExtResource("3_flblx")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxbq2"]
+atlas = ExtResource("3_flblx")
+region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gur4j"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_464qi")
+"texture": SubResource("AtlasTexture_troje")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hbogn")
+"texture": SubResource("AtlasTexture_gfruc")
 }, {
-"duration": 2.0,
-"texture": SubResource("AtlasTexture_bwvxo")
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_meyhv")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_dy348")
 }],
 "loop": true,
 "name": &"dodge",
-"speed": 8.0
+"speed": 16.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ixj0x")
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_mwal1")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_r87m3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mvc1h")
+"texture": SubResource("AtlasTexture_n0xnt")
+}, {
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_gxbq2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n0xnt")
 }],
 "loop": true,
 "name": &"idle",
-"speed": 4.0
+"speed": 16.0
 }]
-
-[sub_resource type="GDScript" id="GDScript_k5ec1"]
-script/source = "extends AnimatedSprite2D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
 
 [node name="TutorialLevel" type="Node2D"]
 
@@ -73,21 +123,33 @@ offset_right = 120.0
 offset_bottom = 160.0
 color = Color(0.105882, 0.117647, 0.14902, 1)
 
+[node name="Background2" type="ColorRect" parent="."]
+visible = false
+offset_top = 24.0
+offset_right = 105.0
+offset_bottom = 159.0
+color = Color(0.105882, 0.117647, 0.14902, 1)
+
 [node name="RhythmManager" type="Node2D" parent="."]
 script = ExtResource("1_aamvn")
 
 [node name="DodgeTimer" type="Timer" parent="RhythmManager"]
 process_callback = 0
-wait_time = 0.5
+wait_time = 0.4
 one_shot = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RhythmManager"]
+[node name="CatSprite" type="AnimatedSprite2D" parent="RhythmManager"]
+texture_filter = 3
+position = Vector2(67, 84)
+sprite_frames = SubResource("SpriteFrames_54bul")
+animation = &"idle"
+frame_progress = 0.298816
 
 [node name="HandSprite" type="AnimatedSprite2D" parent="RhythmManager"]
-position = Vector2(62, 109)
+position = Vector2(61, 63)
 sprite_frames = SubResource("SpriteFrames_gur4j")
-animation = &"dodge"
-script = SubResource("GDScript_k5ec1")
+animation = &"idle"
+frame_progress = 0.298817
 
 [node name="Song" type="AudioStreamPlayer" parent="RhythmManager"]
 stream = ExtResource("2_34nfj")

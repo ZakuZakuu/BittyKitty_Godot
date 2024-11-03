@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var hand_sprite: AnimatedSprite2D = $HandSprite
+@onready var cat_sprite: AnimatedSprite2D = $CatSprite
 @onready var dodge_timer: Timer = $DodgeTimer
 @onready var song: AudioStreamPlayer = $Song
 
@@ -23,7 +24,7 @@ var timeCount: float = secondPerBeat	# counter to trigger beats
 
 ## hand variables
 var isDodging := false
-const dodgeDist = 20
+const dodgeDist = 10
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -57,12 +58,14 @@ func _physics_process(delta: float) -> void:
 		
 		# reset timer when re-triggering dodge
 		if !dodge_timer.is_stopped():
-			hand_sprite.position.y -= dodgeDist
+			hand_sprite.position.y += dodgeDist
+			hand_sprite.position.x -= dodgeDist
 			dodge_timer.stop()
 			hand_sprite.stop()
 		
 		# dodge down
-		hand_sprite.position.y += dodgeDist
+		hand_sprite.position.y -= dodgeDist
+		hand_sprite.position.x += dodgeDist
 		dodge_timer.start()
 		isDodging = true
 	
@@ -77,6 +80,8 @@ func _physics_process(delta: float) -> void:
 		if !isDodging:
 			hand_sprite.stop()
 			hand_sprite.play("idle")
+		cat_sprite.stop()
+		cat_sprite.play()
 
 	## Handle animations
 	if isDodging:
@@ -89,7 +94,8 @@ func _physics_process(delta: float) -> void:
 func _on_dodge_timer_timeout() -> void:
 	
 	isDodging = false
-	hand_sprite.position.y -= dodgeDist
+	hand_sprite.position.y += dodgeDist
+	hand_sprite.position.x -= dodgeDist
 	print("I'm back!")
 
 # Read JSON file

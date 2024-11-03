@@ -36,8 +36,6 @@ color = Color(0.105, 0.1185, 0.15, 1)
 position = Vector2(63, 59)
 sprite_frames = SubResource("SpriteFrames_24ojg")
 autoplay = "default"
-frame = 1
-frame_progress = 0.770057
 
 [node name="Label" type="Label" parent="."]
 offset_left = 35.0
