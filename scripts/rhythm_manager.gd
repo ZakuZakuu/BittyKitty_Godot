@@ -12,7 +12,8 @@ var scores_list
 var scores_songName
 var scores_notes
 var scores_bpm
-var note_index := 1
+var note_index := 0
+signal _on_score_end
 
 ## Time measurement about the song
 var time_begin
@@ -41,8 +42,8 @@ func _ready() -> void:
 	## reduce lagging and play music
 	time_begin = Time.get_ticks_usec()
 	time_delay = AudioServer.get_time_to_next_mix() + AudioServer.get_output_latency()
-	song.play()
-	print("Current note index is " + str(note_index))
+	#song.play()
+	#print("Current note index is " + str(note_index))
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -69,12 +70,30 @@ func _physics_process(delta: float) -> void:
 		dodge_timer.start()
 		isDodging = true
 	
+	## Handle Level End
+	if song.playing == false and time > timeCount:
+		print("Level End!")
+	
 	if time >= timeCount:
 		timeCount += secondPerBeat
+		
+		if note_index == 0:
+			song.play()
+		
 		### These codes are triggered at every beat
 		
-		note_index += 1
-		print("Current note index is " + str(note_index))
+		# print("Current note index is " + str(note_index))
+		if note_index < scores_notes.size():
+			print("Current action is " + str(scores_notes[note_index]))
+			
+			###!!! Here puts the action handler of the cat
+			
+			
+			
+			
+			
+		else:
+			emit_signal("_on_score_end")
 		
 		# reset sprite animation to match the beat
 		if !isDodging:
@@ -82,8 +101,10 @@ func _physics_process(delta: float) -> void:
 			hand_sprite.play("idle")
 		cat_sprite.stop()
 		cat_sprite.play()
-
-	## Handle animations
+		
+		note_index += 1
+		
+	## Handle Animations
 	if isDodging:
 		hand_sprite.play("dodge")
 	else:

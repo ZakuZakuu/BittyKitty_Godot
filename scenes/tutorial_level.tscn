@@ -140,19 +140,20 @@ one_shot = true
 
 [node name="CatSprite" type="AnimatedSprite2D" parent="RhythmManager"]
 texture_filter = 3
-position = Vector2(67, 84)
+position = Vector2(62, 83)
 sprite_frames = SubResource("SpriteFrames_54bul")
 animation = &"idle"
+autoplay = "idle"
 frame_progress = 0.298816
 
 [node name="HandSprite" type="AnimatedSprite2D" parent="RhythmManager"]
-position = Vector2(61, 63)
+position = Vector2(59, 59)
 sprite_frames = SubResource("SpriteFrames_gur4j")
 animation = &"idle"
+autoplay = "idle"
 frame_progress = 0.298817
 
 [node name="Song" type="AudioStreamPlayer" parent="RhythmManager"]
 stream = ExtResource("2_34nfj")
-autoplay = true
 
 [connection signal="timeout" from="RhythmManager/DodgeTimer" to="RhythmManager" method="_on_dodge_timer_timeout"]
