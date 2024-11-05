@@ -2,7 +2,9 @@ extends Node2D
 
 @onready var hand_sprite: AnimatedSprite2D = $HandSprite
 @onready var cat_sprite: AnimatedSprite2D = $CatSprite
+@onready var tail_sprite: AnimatedSprite2D = $TailSprite
 @onready var dodge_timer: Timer = $DodgeTimer
+@onready var bite_timer: Timer = $BiteTimer
 @onready var song: AudioStreamPlayer = $Song
 
 ## Load Scores
@@ -11,7 +13,6 @@ var scores_data
 var scores_list
 var scores_songName
 var scores_notes
-var scores_bpm
 var note_index := 0
 signal _on_score_end
 
@@ -20,11 +21,15 @@ var time_begin
 var time_delay
 @export var BPM = 120
 var secondPerBeat: float = 60.0 / BPM
+var beatDiv = 1	# beat division
+var secondPerMinUnit: float = 60.0 / BPM / beatDiv	# the minimum time period for actions
 var time			# time
-var timeCount: float = secondPerBeat	# counter to trigger beats
+var timeCount: float = secondPerMinUnit	# counter to trigger beats by minimum time unit
+var beatCount: int = 1 # count min time unit to trigger beats
 
 ## hand variables
 var isDodging := false
+var isBiting := false
 const dodgeDist = 10
 
 # Called when the node enters the scene tree for the first time.
@@ -35,6 +40,12 @@ func _ready() -> void:
 	scores_data = load_json(scores_path)
 	scores_list = scores_data["scores"][1]
 	scores_notes = scores_list["notes"]
+	
+	# Initiate parameters
+	BPM = scores_list["bpm"]
+	beatDiv = scores_list["beatDiv"]
+	secondPerMinUnit= 60.0 / BPM / beatDiv
+	dodge_timer.wait_time = min(0.2, secondPerBeat/2)
 	
 	if scores_notes is Array:
 		print("scores_notes is Array!")
@@ -75,19 +86,40 @@ func _physics_process(delta: float) -> void:
 		print("Level End!")
 	
 	if time >= timeCount:
-		timeCount += secondPerBeat
+		timeCount += secondPerMinUnit
+		
+		if beatCount < beatDiv:
+			beatCount = beatCount + 1
+		else:
+			beatCount = 1
+			###!!! codes here are triggered every beat
+			
+			# reset sprite animation to match the beat
+			if !isDodging:
+				hand_sprite.stop()
+				hand_sprite.play("idle")
+				
+			if !isBiting:
+				cat_sprite.stop()
+				cat_sprite.play()
 		
 		if note_index == 0:
 			song.play()
 		
-		### These codes are triggered at every beat
-		
+		###!!! Codes here are triggered every minimum time unit
 		# print("Current note index is " + str(note_index))
 		if note_index < scores_notes.size():
 			print("Current action is " + str(scores_notes[note_index]))
 			
 			###!!! Here puts the action handler of the cat
-			
+			match scores_notes[note_index]:
+				0:
+					cat_sprite
+				1:
+					swing_tail()
+				2:
+					cat_bite()
+				
 			
 			
 			
@@ -95,12 +127,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			emit_signal("_on_score_end")
 		
-		# reset sprite animation to match the beat
-		if !isDodging:
-			hand_sprite.stop()
-			hand_sprite.play("idle")
-		cat_sprite.stop()
-		cat_sprite.play()
 		
 		note_index += 1
 		
@@ -132,3 +158,17 @@ func load_json(file_path: String):
 			printerr("Load score failed!")
 	else:
 		printerr("Score file not exist!")
+
+func swing_tail():
+	if tail_sprite.animation == "left":
+		tail_sprite.play("right")
+	elif tail_sprite.animation == "right":
+		tail_sprite.play("left")
+	else:
+		return
+
+######## Unfinished!
+func cat_bite():
+	cat_sprite.play("bite")
+	if !isDodging:
+		hand_sprite.play("biten")
