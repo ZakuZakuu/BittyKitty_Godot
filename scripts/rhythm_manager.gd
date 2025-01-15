@@ -110,15 +110,23 @@ func _physics_process(delta: float) -> void:
 		# print("Current note index is " + str(note_index))
 		if note_index < scores_notes.size():
 			print("Current action is " + str(scores_notes[note_index]))
+			#tail_sprite.play("idle")
+			var current_action = scores_notes[note_index]
 			
 			###!!! Here puts the action handler of the cat
-			match scores_notes[note_index]:
+			match int(current_action):
 				0:
-					cat_sprite
+					print("it's 0")
+					tail_sprite.play("idle")
+					cat_sprite.play("idle")
 				1:
+					print("it's 1")
 					swing_tail()
 				2:
+					print("it's 2")
 					cat_bite()
+				_:
+					print("wait wtf?")
 				
 			
 			
@@ -165,7 +173,8 @@ func swing_tail():
 	elif tail_sprite.animation == "right":
 		tail_sprite.play("left")
 	else:
-		return
+		tail_sprite.play("left")
+	return
 
 ######## Unfinished!
 func cat_bite():

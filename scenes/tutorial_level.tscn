@@ -455,7 +455,7 @@ texture_filter = 3
 position = Vector2(72, 84)
 sprite_frames = SubResource("SpriteFrames_yje8u")
 animation = &"idle"
-frame_progress = 0.0918627
+frame_progress = 0.112941
 
 [node name="CatSprite" type="AnimatedSprite2D" parent="RhythmManager"]
 texture_filter = 3
